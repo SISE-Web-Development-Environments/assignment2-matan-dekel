@@ -11,6 +11,12 @@
 				toShow.style.display=("block");
 
 			}
+			function tryLogin(){
+				let form = document.getElementById("login_form")
+				let username = form.elements["name"].value
+				let password = form.elements["password"].value
+				alert("username = " + username + " password = " + password)
+			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	</head>
@@ -22,7 +28,14 @@
 			<button onclick="scrollto('welcome','register')" id = "register-btn" class="btn">Register</button>
 		</div>
 		<div id="login" style="display: none;">
-			Login page
+			Login page:
+			<form id="login_form">
+				<label for="aname">Account name:</label><br>
+				<input type="text" id="aname" name="name"><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="apassword" name="password" value=""><br>
+			</form>
+			  <button onclick="tryLogin()">login</button>
 		</div>
 		<div id="register" style="display: none;">
 			Register Page
