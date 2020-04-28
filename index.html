@@ -16,6 +16,18 @@
 				let username = form.elements["name"].value
 				let password = form.elements["password"].value
 				alert("username = " + username + " password = " + password)
+				scrollto("login","main-page")
+			}
+			function register() {
+				let form = document.getElementById("register_form")
+				let username = form.elements["account_name"].value
+				let password = form.elements["password"].value
+				let full_name = form.elements["full_name"].value
+				let email = form.elements["email"].value
+				let date = form.elements["date"].value
+				alert("username = " + username + " password = " + password + " full name = " +full_name + " email = " +email + " birthday = " + date)
+				scrollto("register","welcome")
+				scrollto("register","game")
 			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
@@ -33,12 +45,25 @@
 				<label for="aname">Account name:</label><br>
 				<input type="text" id="aname" name="name"><br>
 				<label for="password">Password:</label><br>
-				<input type="password" id="apassword" name="password" value=""><br>
+				<input type="password" id="apassword" name="password"><br>
 			</form>
-			  <button onclick="tryLogin()">login</button>
+			  <button onclick="tryLogin()" class="btn">login</button>
 		</div>
 		<div id="register" style="display: none;">
-			Register Page
+			Register Page:
+			<form id="register_form">
+				<label for="aname">Account name:</label><br>
+				<input type="text" id="raname" name="account_name"><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="rapassword" name="password" value=""><br>
+				<label for="rfname">Full name:</label><br>
+				<input type="text" id="rfname" name="full_name"><br>
+				<label for="rmail">Email:</label><br>
+				<input type="email" id="rmail" name="email"><br>
+				<label for="rdate">Birth date:</label><br>
+				<input type="date" id="rdate" name="date"><br>
+			</form>
+			<button onclick="register()" class="btn">Submit</button>
 		</div>
 		<div id ="main-page" style="display: none;">
 			<div id="score">
