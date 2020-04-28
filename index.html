@@ -3,26 +3,42 @@
 	<head>
 		<script src="./js/jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./js/app.js"></script>
-		<link rel="stylesheet" type="text/css" href="./css/component.css" />
+		<script type=text/javascript>
+			function scrollto(div1,div2) {
+				let toHide = document.getElementById(div1);
+				let toShow = document.getElementById(div2);
+				toHide.style.display=("none");
+				toShow.style.display=("block");
+
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	</head>
 
 	<body>
 		<div id="welcome">
 			<img id ="logo">
-			<button id = "login"></button>
-			<button id = "register"></button>
-
+			<button onclick="scrollto('welcome','login')" id = "login-btn" class="btn">Login</button>
+			<button onclick="scrollto('welcome','register')" id = "register-btn" class="btn">Register</button>
 		</div>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+		<div id="login" style="display: none;">
+			Login page
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+		<div id="register" style="display: none;">
+			Register Page
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div id ="main-page" style="display: none;">
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div id="game">
+				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
 		</div>
 	</body>
 </html>
