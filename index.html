@@ -23,6 +23,7 @@
 					localStorage.setItem("p", "p");
 					if (localStorage.getItem(username) === null) {
 						alert("this username doesn't exist")
+						scrollto("login","welcome")
 					}
 					else{
 					scrollto("login","main-page")
@@ -80,48 +81,67 @@
 </head>
 
 <body>
-	<div id="welcome">
-		<img id="logo">
-		<button onclick="scrollto('welcome','login')" id="login-btn" class="btn">Login</button>
-		<button onclick="scrollto('welcome','register')" id="register-btn" class="btn">Register</button>
-	</div>
-	<div id="login" style="display: none;">
-		Login page:
-		<form id="login_form">
-			<label for="aname">Account name:</label><br>
-			<input type="text" id="aname" name="name"><br>
-			<label for="password">Password:</label><br>
-			<input type="password" id="apassword" name="password"><br>
-		</form>
-		<button onclick="tryLogin()" class="btn">login</button>
-	</div>
-	<div id="register" style="display: none;">
-		Register Page:
-		<form id="register_form">
-			<label for="aname">Account name:</label><br>
-			<input type="text" id="raname" name="account_name"><br>
-			<label for="password">Password:</label><br>
-			<input type="password" id="rapassword" name="password" value=""><br>
-			<label for="rfname">Full name:</label><br>
-			<input type="text" id="rfname" name="full_name"><br>
-			<label for="rmail">Email:</label><br>
-			<input type="email" id="rmail" name="email"><br>
-			<label for="rdate">Birth date:</label><br>
-			<input type="date" id="rdate" name="date"><br>
-		</form>
-		<button onclick="register()" class="btn">Submit</button>
-	</div>
-	<div id="main-page" style="display: none;">
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+	<div id = "header" class="header" style="display: table;">
+		
+		<img src="img/logo.png" alt="logo"  height="90px" width="90px" style="float: right;">
+		<div style="float:none">
+			<span id="app_name">Name TBD</span><br>
+			<span id="details">Matan Anavi - 204502215 & Dekel levy - 204318851</span>
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+		
+	</div>
+	<div id = "meun">
+
+	</div>
+	<div id="main_block" class="main_block">
+		<div id="welcome">
+			
+			<button onclick="scrollto('welcome','login')" id="login-btn" class="btn">Login</button>
+			<button onclick="scrollto('welcome','register')" id="register-btn" class="btn">Register</button>
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div id="login" style="display: none;">
+			Login page:
+			<form id="login_form">
+				<label for="aname">Account name:</label><br>
+				<input type="text" id="aname" name="name"><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="apassword" name="password"><br>
+			</form>
+			<button onclick="tryLogin()" class="btn">login</button>
+		</div>
+		<div id="register" style="display: none;">
+			Register Page:
+			<form id="register_form">
+				<label for="aname">Account name:</label><br>
+				<input type="text" id="raname" name="account_name"><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="rapassword" name="password" value=""><br>
+				<label for="rfname">Full name:</label><br>
+				<input type="text" id="rfname" name="full_name"><br>
+				<label for="rmail">Email:</label><br>
+				<input type="email" id="rmail" name="email"><br>
+				<label for="rdate">Birth date:</label><br>
+				<input type="date" id="rdate" name="date"><br>
+			</form>
+			<button onclick="register()" class="btn">Submit</button>
+		</div>
+		<div id="main-page" style="display: none;">
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div id="game">
+				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
+		</div>
+		<div id = "footer" class="footer">
+			<h1 id="app_name">Name TBD</h1>
+			<h2 id = site_detalis>this is a packman game made in HTML5 and JS for school project</h2>
+			<h2 id="communication_details">Matan Anavi - MrBahur25@gmail.com & Dekel levy - Dekelle@post.bgu.ac.il</h2>
 		</div>
 	</div>
 </body>

@@ -10,3 +10,29 @@
     margin: 4px 2px;
     cursor: pointer;
   }
+
+  .footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+  }
+
+  .header {
+    position: fixed;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .main_block {
+    position: relative;
+    top: 100px;
+  }
