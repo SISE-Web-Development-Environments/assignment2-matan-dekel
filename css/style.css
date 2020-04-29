@@ -37,7 +37,7 @@ body {
 
   nav {
     float: left;
-    width: 30%;
+    width: 10%;
     background: #ccc;
     padding: 20px;
   }
@@ -50,7 +50,7 @@ body {
   article {
     float: left;
     padding: 20px;
-    width: 70%;
+    width: 90%;
     background-color: #f1f1f1;
   }
 
