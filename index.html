@@ -7,10 +7,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/app.js"></script>
 	<script type=text/javascript>
-			function scrollto(div1,div2) {
-				let toHide = document.getElementById(div1);
-				let toShow = document.getElementById(div2);
-				toHide.style.display=("none");
+			function scrollto(div) {
+				document.getElementById("register").style.display=("none");
+				document.getElementById("login").style.display=("none");
+				document.getElementById("welcome").style.display=("none");
+				document.getElementById("main-page").style.display=("none");
+				let toShow = document.getElementById(div);
 				toShow.style.display=("block");
 
 			}
@@ -22,15 +24,15 @@
 					localStorage.setItem("p", "p");
 					if (localStorage.getItem(username) === null) {
 						alert("this username doesn't exist")
-						scrollto("login","welcome")
+						scrollto("welcome")
 					}
 					else{
 						if (localStorage.getItem(username) !== password) {
 						alert("wrong password")
-						scrollto("login","welcome")
+						scrollto("welcome")
 						}
 						else{
-					scrollto("login","main-page")
+					scrollto("main-page")
 						}
 					}
 				}
@@ -78,7 +80,7 @@
 					  }		
 			}
 		}
-					scrollto("register","welcome")
+					scrollto("welcome")
 	}
 		</script>
 	<link rel="stylesheet" type="text/css" href="./css/style.css" />
@@ -96,15 +98,15 @@
 	<section id="main_block" class="main_block">
 		<nav>
 			<ul>
-				<li><a	href="#" onclick="scrollto('login','welcome');"> Welcome</a></li>
-				<li><a href="#" onclick="scrollto('welcome','register');">Register</a></li>
-				<li> <a href="#" onclick="scrollto('welcome','login');">Login</a></li>
+				<li><a	href="#" onclick="scrollto('welcome');"> Welcome</a></li>
+				<li><a href="#" onclick="scrollto('register');">Register</a></li>
+				<li> <a href="#" onclick="scrollto('login');">Login</a></li>
 				<li><a>About</a></li>
 			</ul>
 		</nav>
 		<div id="welcome">
-			<button onclick="scrollto('welcome','login')" id="login-btn" class="btn">Login</button>
-			<button onclick="scrollto('welcome','register')" id="register-btn" class="btn">Register</button>
+			<button onclick="scrollto('login')" id="login-btn" class="btn">Login</button>
+			<button onclick="scrollto('register')" id="register-btn" class="btn">Register</button>
 		</div>
 		<div id="login" style="display: none;">
 			Login page:
