@@ -1,3 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .btn {
     background-color: #4CAF50;
     border: none;
@@ -11,28 +19,43 @@
     cursor: pointer;
   }
 
-  .footer{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
+
+  header {
+    background-color: #666;
+    padding: 30px;
     text-align: center;
+    font-size: 35px;
+    color: white;
   }
 
-  .header {
-    position: fixed;
+  footer {
+    background-color: #777;
+    padding: 10px;
     text-align: center;
-    background: #1abc9c;
     color: white;
-    font-size: 30px;
-    width: 100%;
-    left: 0;
-    top: 0;
   }
 
-  .main_block {
-    position: relative;
-    top: 100px;
+  nav {
+    float: left;
+    width: 30%;
+    background: #ccc;
+    padding: 20px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  article {
+    float: left;
+    padding: 20px;
+    width: 70%;
+    background-color: #f1f1f1;
+  }
+
+  section:after {
+    content: "";
+    display: table;
+    clear: both;
   }

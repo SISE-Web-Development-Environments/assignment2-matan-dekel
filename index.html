@@ -81,21 +81,25 @@
 </head>
 
 <body>
-	<div id = "header" class="header" style="display: table;">
+	<header id = "header" class="header" style="display: table;">
 		
 		<img src="img/logo.png" alt="logo"  height="90px" width="90px" style="float: right;">
 		<div style="float:none">
 			<span id="app_name">Name TBD</span><br>
 			<span id="details">Matan Anavi - 204502215 & Dekel levy - 204318851</span>
 		</div>
-		
-	</div>
-	<div id = "meun">
+	</header>
 
-	</div>
-	<div id="main_block" class="main_block">
+	<section id="main_block" class="main_block">
+		<nav>
+			<ul>
+				<li><a> Welcome</a></li>
+				<li><a>Register</a></li>
+				<li><a>Login</a></li>
+				<li><a>About</a></li>
+			</ul>
+		</nav>
 		<div id="welcome">
-			
 			<button onclick="scrollto('welcome','login')" id="login-btn" class="btn">Login</button>
 			<button onclick="scrollto('welcome','register')" id="register-btn" class="btn">Register</button>
 		</div>
@@ -138,12 +142,12 @@
 				<canvas id="canvas" height="600" width="600"></canvas>
 			</div>
 		</div>
-		<div id = "footer" class="footer">
-			<h1 id="app_name">Name TBD</h1>
-			<h2 id = site_detalis>this is a packman game made in HTML5 and JS for school project</h2>
-			<h2 id="communication_details">Matan Anavi - MrBahur25@gmail.com & Dekel levy - Dekelle@post.bgu.ac.il</h2>
-		</div>
-	</div>
+	</section>
+	<footer id = "footer" class="footer">
+		<span id="app_name">Name TBD</span><br>
+		<span id = site_detalis>this is a packman game made in HTML5 and JS for school project</span><br>
+		<span id="communication_details">Matan Anavi - MrBahur25@gmail.com & Dekel levy - Dekelle@post.bgu.ac.il</span>
+	</footer>
 </body>
 
 </html>
