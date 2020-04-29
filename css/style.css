@@ -22,7 +22,7 @@ body {
 
   header {
     background-color: #666;
-    padding: 30px;
+    padding: 7px;
     text-align: center;
     font-size: 35px;
     color: white;
@@ -30,7 +30,7 @@ body {
 
   footer {
     background-color: #666;
-    padding: 10px;
+    padding: 0px;
     text-align: center;
     color: white;
   }
@@ -41,7 +41,7 @@ body {
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 77px 16px;
+    padding: 266px 16px;
     text-decoration: none;
     font-size: 17px;
   }
