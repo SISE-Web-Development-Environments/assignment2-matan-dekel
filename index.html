@@ -3,8 +3,8 @@
 
 <head>
 	<script src="./js/jquery-3.4.1.slim.min.js"></script>
-	<script src="jquery-1.10.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="js/jquery.validate.js"></script>
 	<script type="text/javascript" src="./js/app.js"></script>
 	<script type=text/javascript src="./js/logics.js"></script>
 	<script type="text/javascript" src=./js/modal.js></script>
@@ -46,18 +46,22 @@
 		<div id="register" style="display: none;">
 			Register Page:
 			<form id="register_form">
-				<label for="aname">Account name:</label><br>
-				<input type="text" id="raname" name="account_name"><br>
-				<label for="password">Password:</label><br>
-				<input type="password" id="rapassword" name="password" value=""><br>
-				<label for="rfname">Full name:</label><br>
-				<input type="text" id="rfname" name="full_name"><br>
-				<label for="rmail">Email:</label><br>
-				<input type="email" id="rmail" name="email"><br>
-				<label for="rdate">Birth date:</label><br>
-				<input type="date" id="rdate" name="date"><br>
+				<fieldset>
+					<label for="aname">Account name:</label><br>
+					<input type="text" id="raname" name="account_name" required><br>
+					<label for="password">Password:</label><br>
+					<input type="password" id="rapassword" name="password" value="" minlength="6" required><br>
+					<label for="rfname">Full name:</label><br>
+					<input type="text" id="rfname" name="full_name" required><br>
+					<label for="rmail">Email:</label><br>
+					<input type="email" id="rmail" name="email" required><br>
+					<label for="rdate">Birth date:</label><br>
+					<input type="date" id="rdate" name="date" required><br>
+
+					<input class="submit" type="submit" value="submit"/>
+				</fieldset>
 			</form>
-			<button onclick="register()" class="btn">Submit</button>
+			
 		</div>
 		<div id="main-page" style="display: none;">
 			<div id="score">

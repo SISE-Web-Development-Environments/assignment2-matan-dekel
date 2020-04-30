@@ -1,3 +1,34 @@
+jQuery.validator.addMethod("passwordCheck",passwordCheck, "Password must contain atleast one latter and one number");
+$().ready(function(){
+    $("#register_form").validate({
+        rules:{
+            password:{
+                required: true,
+                passwordCheck: true,
+                minlength:6
+
+            }
+            
+        },
+        messages:{
+
+        }
+    })
+})
+
+function passwordCheck(value,element,param){
+    if (this.optional(element)) {
+        return true;
+    } else if (!/[A-Z]/.test(value)) {
+        return false;
+    } else if (!/[a-z]/.test(value)) {
+        return false;
+    } else if (!/[0-9]/.test(value)) {
+        return false;
+    }
+    return true;
+}
+
 function scrollto(div) {
     document.getElementById("register").style.display=("none");
     document.getElementById("login").style.display=("none");
@@ -28,6 +59,8 @@ function tryLogin(){
         }
     }
 }
+
+
 function register() {
     let form = document.getElementById("register_form")
     let username = form.elements["account_name"].value
