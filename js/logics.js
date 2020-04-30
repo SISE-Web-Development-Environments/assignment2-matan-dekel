@@ -1,26 +1,8 @@
-jQuery.validator.addMethod("passwordCheck",passwordCheck, "Password must contain atleast one latter and one number");
-$().ready(function(){
-    $("#register_form").validate({
-        rules:{
-            password:{
-                required: true,
-                passwordCheck: true,
-                minlength:6
 
-            }
-            
-        },
-        messages:{
 
-        }
-    })
-})
-
-function passwordCheck(value,element,param){
+function passwordCheck(value,element){
     if (this.optional(element)) {
         return true;
-    } else if (!/[A-Z]/.test(value)) {
-        return false;
     } else if (!/[a-z]/.test(value)) {
         return false;
     } else if (!/[0-9]/.test(value)) {
@@ -28,6 +10,37 @@ function passwordCheck(value,element,param){
     }
     return true;
 }
+
+$(function(){
+    $.validator.addMethod("passwordCheck",passwordCheck,
+    "password must contain atleaset 1 letter and 1 charachter");
+    
+    $("#register_form").validate({
+        rules:
+        {
+            account_name:{
+                required: true
+            },
+            password:{
+                required: true,
+                minlength: 6,
+                passwordCheck: true
+                
+            },
+            full_name:{
+                required: true
+            },
+            email:{
+                email: true,
+                required: true
+            },
+            date:{
+                required: true
+            }
+        }
+    });
+});
+
 
 function scrollto(div) {
     document.getElementById("register").style.display=("none");
