@@ -6,6 +6,12 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var audio = new Audio('music/pacman.mp3');
+var up;
+var down;
+var right;
+var left;
+
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -13,12 +19,19 @@ $(document).ready(function() {
 });
 
 function Start() {
+	audio.play();
+	window.onload = function () {
+		var twoMinutes = 60 * 2,
+		display = document.querySelector('#lblTime');
+		startTimer(twoMinutes, display);
+	};
+		
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 100;
-	var food_remain = 50;
-	var pacman_remain = 1;
+	var food_remain = 51;
+	var pacman_remain = 5;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
@@ -54,6 +67,37 @@ function Start() {
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
+
+	function startTimer(duration, display) {
+		var timer = duration, minutes, seconds;
+		setInterval(function () {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+			display.textContent = minutes + ":" + seconds;
+	
+			if (--timer < 0) {
+				timer = 0;
+			}
+			else{
+				if (timer===0){
+					
+					if(score<50){
+						alert("You are better than "+score+" points");
+						scrollto("welcome")
+					}
+						else{
+							alert("Winner!!!");
+						}
+					}
+			}
+		}, 1000);
+	}
+
+
+
+
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -83,16 +127,16 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (up) {//up
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (down) {//down
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (left) {//left
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (right) {//right
 		return 4;
 	}
 }
