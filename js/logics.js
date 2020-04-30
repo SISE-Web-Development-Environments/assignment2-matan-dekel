@@ -41,6 +41,18 @@ $(function(){
     });
 });
 
+$(document).ready(function(){
+    
+    $("#register_form").submit(function(e){
+        e.preventDefault()
+        let username = $("#register_form").find('input[name=account_name]').val();
+        let password = $("#register_form").find('input[name=password]').val();
+        localStorage.setItem(username, password);
+    });
+
+})
+
+
 
 function scrollto(div) {
     document.getElementById("register").style.display=("none");
@@ -72,6 +84,9 @@ function tryLogin(){
         }
     }
 }
+
+
+
 
 
 function register() {
