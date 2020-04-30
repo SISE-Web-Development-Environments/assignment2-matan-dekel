@@ -1,3 +1,59 @@
+
+
+function passwordCheck(value,element){
+    if (this.optional(element)) {
+        return true;
+    } else if (!/[a-z]/.test(value)) {
+        return false;
+    } else if (!/[0-9]/.test(value)) {
+        return false;
+    }
+    return true;
+}
+
+$(function(){
+    $.validator.addMethod("passwordCheck",passwordCheck,
+    "password must contain atleaset 1 letter and 1 charachter");
+    
+    $("#register_form").validate({
+        rules:
+        {
+            account_name:{
+                required: true
+            },
+            password:{
+                required: true,
+                minlength: 6,
+                passwordCheck: true
+                
+            },
+            full_name:{
+                required: true
+            },
+            email:{
+                email: true,
+                required: true
+            },
+            date:{
+                required: true
+            }
+        }
+    });
+});
+
+$(document).ready(function(){
+    
+    $("#register_form").submit(function(e){
+        e.preventDefault()
+        let username = $("#register_form").find('input[name=account_name]').val();
+        let password = $("#register_form").find('input[name=password]').val();
+        localStorage.setItem(username, password);
+    });
+
+})
+
+
+
 function scrollto(div) {
     document.getElementById("register").style.display=("none");
     document.getElementById("login").style.display=("none");
@@ -28,6 +84,11 @@ function tryLogin(){
         }
     }
 }
+
+
+
+
+
 function register() {
     let form = document.getElementById("register_form")
     let username = form.elements["account_name"].value
