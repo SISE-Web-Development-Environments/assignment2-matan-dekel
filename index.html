@@ -66,6 +66,7 @@
 		<div id="settings" style="display: none;">
 			<form id="settings_form">
 				<fieldset>
+
 					<label for="time_settings">Timer: </label><br>
 					<input type="number" id="time_settings" name="time" value=""><br>
 					<label for="food_settings">number of balls(50-90):</label><br>
@@ -78,6 +79,11 @@
 					<input type="color" id="15_points_settings" name="15points"><br>
 					<label for="25_points_settings">color of 25 point</label><br>
 					<input type="color" id="25_points_settings" name="25points"><br>
+					<button onclick="upButton()">Choose up button</button><br>
+					<button onclick="downButton()">Choose down button</button><br>
+					<button onclick="rightButton()">Choose right button</button><br>
+					<button onclick="leftButton()">Choose left button</button><br>
+
 
 					<input id ="settings_button"class="submit" type="submit" value="submit"/>
 
@@ -91,10 +97,17 @@
 				<input id="lblScore" type="text" />
 			</div>
 			<div id="time">
-				<div>You lose in: <span id="lblTime">02:00</span> minutes!</div>
+				<div>You lose in: <span id="lblTime"></span> minutes!</div>
 			</div>
-			<div>You've got <span id= "lblLives">3</span> lives remaining!</div>
+			<div class="lblLife">
+				<span>LIVES:</span>
+				<img src="img/pacman-right.png" alt="life1" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life2" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life3" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life4" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life5" height= "30px" width= "30px" style= "vertical-align: middle;">
 
+			</div>
 			<button onclick="Start()" class="btn">Restart</button>
 			<div id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
