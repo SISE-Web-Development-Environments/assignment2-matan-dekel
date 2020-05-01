@@ -14,7 +14,6 @@ function passwordCheck(value,element){
 $(function(){
     $.validator.addMethod("passwordCheck",passwordCheck,
     "password must contain atleaset 1 letter and 1 charachter");
-    
     $("#register_form").validate({
         rules:
         {
@@ -39,16 +38,41 @@ $(function(){
             }
         }
     });
+
+    $("#settings_form").validate({
+        rules:
+        {
+            time:{
+                required: true,
+                min:60
+            },
+            food:{
+                required: true,
+                range: [50,90]
+            },
+            monsters:{
+                required:true,
+                range:[1,4]
+            }
+        }
+    })
 });
 
 $(document).ready(function(){
-    
     $("#register_form").submit(function(e){
         e.preventDefault()
         let username = $("#register_form").find('input[name=account_name]').val();
         let password = $("#register_form").find('input[name=password]').val();
         localStorage.setItem(username, password);
+        scrollto("welcome")
     });
+
+    $("#settings_form").submit(function(e){
+        e.preventDefault()
+        //send parameters to game
+        scrollto("main-page")
+        play()
+    })
 
 })
 
@@ -59,6 +83,7 @@ function scrollto(div) {
     document.getElementById("login").style.display=("none");
     document.getElementById("welcome").style.display=("none");
     document.getElementById("main-page").style.display=("none");
+    document.getElementById("settings").style.display=("none");
     let toShow = document.getElementById(div);
     toShow.style.display=("block");
 
@@ -79,7 +104,7 @@ function tryLogin(){
             scrollto("welcome")
             }
             else{
-        scrollto("main-page")
+        scrollto("settings")
             }
         }
     }
