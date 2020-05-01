@@ -63,6 +63,28 @@
 			</form>
 			
 		</div>
+		<div id="settings" style="display: none;">
+			<form id="settings_form">
+				<fieldset>
+					<label for="time_settings">Timer: </label><br>
+					<input type="number" id="time_settings" name="time" value=""><br>
+					<label for="food_settings">number of balls(50-90):</label><br>
+					<input type="number" id="food_settings" name="food" value=""><br>
+					<label for="monster_settings">number of monsters(1-4):</label><br>
+					<input type="number" id="monster_settings" name="monsters" value=""><br>
+					<label for="5_points_settings">color of 5 point</label><br>
+					<input type="color" id="5_points_settings" name="5points"><br>
+					<label for="15_points_settings">color of 15 point</label><br>
+					<input type="color" id="15_points_settings" name="15points"><br>
+					<label for="25_points_settings">color of 25 point</label><br>
+					<input type="color" id="25_points_settings" name="25points"><br>
+
+					<input id ="settings_button"class="submit" type="submit" value="submit"/>
+
+					<button onclick="randomizeSettings()">Random</button><br>
+				</fieldset>
+			</form>
+		</div>
 		<div id="main-page" style="display: none;">
 			<div id="score">
 				<label for="lblScore">SCORE:</label>
