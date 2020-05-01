@@ -69,14 +69,17 @@
 				<input id="lblScore" type="text" />
 			</div>
 			<div id="time">
-				<label for="lblTime">TIME:</label>
-				<input id="lblTime" type="text" />
+				<div>You lose in: <span id="lblTime">02:00</span> minutes!</div>
 			</div>
+			<div>You've got <span id= "lblLives">3</span> lives remaining!</div>
+
+			<button onclick="Start()" class="btn">Restart</button>
 			<div id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
 			</div>
 		</div>
 	</section>
+
 	<footer id = "footer" class="footer">
 		<span id="app_name">Name TBD</span><br>
 		<span id = site_detalis>this is a packman game made in HTML5 and JS for school project</span><br>
