@@ -11,6 +11,33 @@ function passwordCheck(value,element){
     return true;
 }
 
+function upButton(event){
+    $(document).keypress(function(e){
+        var up= String.fromCharCode(e.which);
+    });
+    scrollto("settings")
+}
+function downButton(event){
+    $(document).keypress(function(e){
+        var down= String.fromCharCode(e.which);
+    });
+    scrollto("settings")
+}
+
+function leftButton(event){
+    $(document).keypress(function(e){
+        var left= String.fromCharCode(e.which);
+    });
+    scrollto("settings")
+}
+function rightButton(event){
+    $(document).keypress(function(e){
+        var right= String.fromCharCode(e.which);
+    });
+    scrollto("settings")
+}
+
+
 $(function(){
     $.validator.addMethod("passwordCheck",passwordCheck,
     "password must contain atleaset 1 letter and 1 charachter");
@@ -69,14 +96,12 @@ $(document).ready(function(){
 
     $("#settings_form").submit(function(e){
         e.preventDefault()
-        //send parameters to game
+        //send parameters to gameva
         scrollto("main-page")
-        play()
+        Start()
     })
 
 })
-
-
 
 function scrollto(div) {
     document.getElementById("register").style.display=("none");

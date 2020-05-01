@@ -7,13 +7,23 @@ var start_time;
 var time_elapsed;
 var interval;
 
-
-
 var audio = new Audio('music/pacman.mp3');
 var up;
 var down;
 var right;
 var left;
+
+var p_right = new Image();
+p_right.src = "img/pacman-right.png";
+var p_left = new Image();
+p_left.src = "img/pacman-left.png";
+var p_up = new Image();
+p_up.src = "img/pacman-up.png";
+var p_down = new Image();
+p_down.src = "img/pacman-down.png";
+var ghost = new Image();
+ghost.src = "img/ghosy.png";
+
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -21,11 +31,10 @@ $(document).ready(function() {
 });
 
 function Start() {
-let time = $("#settings_form").find('input[name=time]').val();
-display = document.querySelector('#lblTime');
-startTimer(time, display);	
-delete time	
-
+	audio.play();
+	var twoMinutes = 60 * 2,
+	display = document.querySelector('#lblTime');
+	startTimer(twoMinutes, display);
 
 	board = new Array();
 	score = 0;
@@ -86,36 +95,7 @@ delete time
 	interval = setInterval(UpdatePosition, 250);
 }
 
-	function startTimer(duration, display) {
-		let timer = duration, minutes, seconds;
-		setInterval(function () {
-			minutes = parseInt(timer / 60, 10);
-			seconds = parseInt(timer % 60, 10);
-			minutes = minutes < 10 ? "0" + minutes : minutes;
-			seconds = seconds < 10 ? "0" + seconds : seconds;
-			display.textContent = minutes + ":" + seconds;
-	
-			if (--timer < 0) {
-				timer = 0;
-			}
-			else{
-				if (timer===0){
-					
-					if(score<50){
-						alert("You are better than "+score+" points");
-						scrollto("welcome")
-					}
-						else{
-							alert("Winner!!!");
-						}
-					}
-			}
-		}, 1000);
-	}
-
-
 function findRandomEmptyCell(board) {
-	audio.play();
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
 	while (board[i][j] != 0) {
@@ -126,22 +106,21 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (up) {//up
+	if (keysDown[38]) {
 		return 1;
 	}
-	if (down) {//down
+	if (keysDown[40]) {
 		return 2;
 	}
-	if (left) {//left
+	if (keysDown[37]) {
 		return 3;
 	}
-	if (right) {//right
+	if (keysDown[39]) {
 		return 4;
 	}
 }
 
 function Draw() {
-
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
@@ -176,7 +155,6 @@ function Draw() {
 }
 
 function UpdatePosition() {
-
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
 	if (x == 1) {
