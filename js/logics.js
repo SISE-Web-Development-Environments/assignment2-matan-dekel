@@ -73,36 +73,37 @@ $(document).ready(function(){
     });
 
     $("#settings_form").submit(function(e){
-        e.preventDefault()
-        //send parameters to gameva
-        scrollto("main-page")
-        Start()
+        e.preventDefault();
+            alert(3)
+            //send parameters to gameva
+            scrollto("main-page");
+            Start();
     })
 
     $("#up_settings").keydown(function(e){
-        e.preventDefault()
-        let form = document.getElementById("settings_form")
+        e.preventDefault();
+        let form = document.getElementById("settings_form");
         frmElement = form.elements["up"];
         frmElement.value = e.keyCode;
         })
 
     $("#down_settings").keydown(function(e){
-        e.preventDefault()
-        let form = document.getElementById("settings_form")
+        e.preventDefault();
+        let form = document.getElementById("settings_form");
         frmElement = form.elements["down"];
         frmElement.value = e.keyCode;
          })
 
     $("#right_settings").keydown(function(e){
         e.preventDefault()
-        let form = document.getElementById("settings_form")
+        let form = document.getElementById("settings_form");
         frmElement = form.elements["right"];
         frmElement.value = e.keyCode;
                 })
 
     $("#left_settings").keydown(function(e){
-        e.preventDefault()
-        let form = document.getElementById("settings_form")
+        e.preventDefault();
+        let form = document.getElementById("settings_form");
         frmElement = form.elements["left"];
         frmElement.value = e.keyCode;
       })
@@ -110,15 +111,15 @@ $(document).ready(function(){
 })
 
 function randomizeSettings(){
-        let form = document.getElementById("settings_form")
+        let form = document.getElementById("settings_form");
         frmElementUp = form.elements["up"];
-        frmElement.value = 38;
+        frmElementUp.value = 38;
         frmElementDown = form.elements["down"];
-        frmElement.value = 40;
+        frmElementDown.value = 40;
         frmElementRight = form.elements["right"];
-        frmElement.value = 39;
+        frmElementRight.value = 39;
         frmElementLeft = form.elements["left"];
-        frmElement.value = 37;
+        frmElementLeft.value = 37;
         var time= form.elements["time"];
         time.value = Math.floor(Math.random() * 180) + 60;
         var food= form.elements["food"];
