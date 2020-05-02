@@ -121,9 +121,9 @@ function randomizeSettings(){
         frmElementLeft = form.elements["left"];
         frmElementLeft.value = 37;
         var time= form.elements["time"];
-        time.value = Math.floor(Math.random() * 180) + 60;
+        time.value = Math.floor(Math.random() * (180 - 60 + 1) + 60);
         var food= form.elements["food"];
-        food.value = Math.floor(Math.random() * 90) + 50;
+        food.value = Math.floor(Math.random() * (90 - 50 + 1) + 50);
         var monsters= form.elements["monsters"];
         monsters.value = Math.floor(Math.random() * 4) + 1;
         var fivePoints= form.elements["5points"];

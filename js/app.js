@@ -36,7 +36,10 @@ function Start() {
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 100;
-	var food_remain = 50;
+	var food_remain = $("#settings_form").find('input[name=food]').val();
+	var fivePoints=food_remain*0.6;
+	var fifteenPoints=food_remain*0.3
+	var twentyFivePoints=food_remain*0.1;
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -54,8 +57,50 @@ function Start() {
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
+					var secondRandomNum = Math.random();
+					if(secondRandomNum<1/3){
+						if(fivePoints>0){
+							board[i][j] = 5;
+							fivePoints--;
+						}
+						else if(fifteenPoints>0){
+								board[i][j] = 15;
+								fifteenPoints--;
+							}	
+							else if(twentyFivePoints>0){
+								board[i][j] = 15;
+								fifteenPoints--;
+							}
+							else if (secondRandomNum<2/3){
+								if(fifteenPoints>0){
+									board[i][j] = 15;
+									fifteenPoints--;
+								}
+								else if(twentyFivePoints>0){
+									board[i][j] = 25;
+									twentyFivePoints--;
+									}	
+									else if(fivePoints>0){
+										board[i][j] = 5;
+										fivePoints--;
+									}
+							}
+							else{
+								if(twentyFivePoints>0){
+									board[i][j] = 25;
+									twentyFivePoints--;
+									}
+									else if(fivePoints>0){
+										board[i][j] = 5;
+										fivePoints--;
+									}
+									else if(fifteenPoints>0){
+										board[i][j] = 15;
+										fifteenPoints--;
+									}	
+							}
+					}
 					food_remain--;
-					board[i][j] = 1;
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
 					shape.i = i;
 					shape.j = j;
@@ -106,7 +151,7 @@ function Start() {
 			else{
 				if (timer===0){
 					
-					if(score<50){
+					if(score<100){
 						alert("You are better than "+score+" points");
 						scrollto("welcome")
 					}
@@ -146,7 +191,7 @@ function GetKeyPressed() {
 }
 
 function Draw() {
-
+	
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
@@ -165,12 +210,24 @@ function Draw() {
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
-			} else if (board[i][j] == 1) {
+			} else if (board[i][j] == 5) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.fillStyle = $("#settings_form").find('input[5points]').val(); //color
 				context.fill();
-			} else if (board[i][j] == 4) {
+			} 
+			else if (board[i][j] == 15) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = $("#settings_form").find('input[15points]').val(); //color
+				context.fill();
+			}
+			else if (board[i][j] == 25) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = $("#settings_form").find('input[25points]').val(); //color
+				context.fill();
+			}else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
 				context.fillStyle = "grey"; //color
@@ -207,16 +264,20 @@ function UpdatePosition() {
 	if (board[shape.i][shape.j] == 1) {
 		score++;
 	}
+	if (board[shape.i][shape.j] == 5) {
+		score=score+5;
+	}
+	if (board[shape.i][shape.j] == 15) {
+		score=score+15;
+	}
+	if (board[shape.i][shape.j] == 25) {
+		score=score+25;
+	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
-		window.clearInterval(interval);
-		window.alert("Game completed");
-	} else {
 		Draw();
-	}
 }
