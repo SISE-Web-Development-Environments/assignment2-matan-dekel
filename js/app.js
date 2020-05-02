@@ -21,10 +21,15 @@ $(document).ready(function() {
 });
 
 function Start() {
-let time = $("#settings_form").find('input[name=time]').val();
-display = document.querySelector('#lblTime');
-startTimer(time, display);	
-delete time	
+	let form = document.getElementById("settings_form")
+	let time = $("#settings_form").find('input[name=time]').val();
+	display = document.querySelector('#lblTime');
+	startTimer(time, display);	
+	delete time	
+	up = $("#settings_form").find('input[name=up]').val();
+	down = $("#settings_form").find('input[name=down]').val();
+	right = $("#settings_form").find('input[name=right]').val();
+	left = $("#settings_form").find('input[name=left]').val();
 
 
 	board = new Array();
@@ -126,6 +131,7 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
+
 	if (up) {//up
 		return 1;
 	}

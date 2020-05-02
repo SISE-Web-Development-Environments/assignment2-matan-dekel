@@ -13,6 +13,7 @@ function passwordCheck(value,element){
 
 
 
+
 $(function(){
     $.validator.addMethod("passwordCheck",passwordCheck,
     "password must contain atleaset 1 letter and 1 charachter");
@@ -80,25 +81,59 @@ $(document).ready(function(){
 
     $("#up_settings").keydown(function(e){
         e.preventDefault()
-        alert(e.keyCode);
-    })
+        let form = document.getElementById("settings_form")
+        frmElement = form.elements["up"];
+        frmElement.value = e.keyCode;
+        })
 
     $("#down_settings").keydown(function(e){
         e.preventDefault()
-        alert(e.keyCode);
-    })
+        let form = document.getElementById("settings_form")
+        frmElement = form.elements["down"];
+        frmElement.value = e.keyCode;
+         })
 
     $("#right_settings").keydown(function(e){
         e.preventDefault()
-        alert(e.keyCode);
-    })
+        let form = document.getElementById("settings_form")
+        frmElement = form.elements["right"];
+        frmElement.value = e.keyCode;
+                })
 
     $("#left_settings").keydown(function(e){
         e.preventDefault()
-        alert(e.keyCode);
-    })
+        let form = document.getElementById("settings_form")
+        frmElement = form.elements["left"];
+        frmElement.value = e.keyCode;
+      })
 
 })
+
+function randomizeSettings(){
+        let form = document.getElementById("settings_form")
+        frmElementUp = form.elements["up"];
+        frmElement.value = 38;
+        frmElementDown = form.elements["down"];
+        frmElement.value = 40;
+        frmElementRight = form.elements["right"];
+        frmElement.value = 39;
+        frmElementLeft = form.elements["left"];
+        frmElement.value = 37;
+        var time= form.elements["time"];
+        time.value = Math.floor(Math.random() * 180) + 60;
+        var food= form.elements["food"];
+        food.value = Math.floor(Math.random() * 90) + 50;
+        var monsters= form.elements["monsters"];
+        monsters.value = Math.floor(Math.random() * 4) + 1;
+        var fivePoints= form.elements["5points"];
+        fivePoints.value = getRandomColor()
+        var fifteenPoints= form.elements["15points"];
+        fifteenPoints.value = getRandomColor()
+        var twentyFivePoints= form.elements["25points"];
+        twentyFivePoints.value = getRandomColor()
+        
+}
+
 
 function scrollto(div) {
     document.getElementById("register").style.display=("none");
