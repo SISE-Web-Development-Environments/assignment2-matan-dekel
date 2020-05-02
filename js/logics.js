@@ -78,22 +78,22 @@ $(document).ready(function(){
         Start()
     })
 
-    $("#up_settings").keypress(function(e){
+    $("#up_settings").keydown(function(e){
         e.preventDefault()
         alert(e.keyCode);
     })
 
-    $("#down_settings").keypress(function(e){
+    $("#down_settings").keydown(function(e){
         e.preventDefault()
         alert(e.keyCode);
     })
 
-    $("#right_settings").keypress(function(e){
+    $("#right_settings").keydown(function(e){
         e.preventDefault()
         alert(e.keyCode);
     })
 
-    $("#left_settings").keypress(function(e){
+    $("#left_settings").keydown(function(e){
         e.preventDefault()
         alert(e.keyCode);
     })
