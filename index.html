@@ -66,7 +66,6 @@
 		<div id="settings" style="display: none;">
 			<form id="settings_form">
 				<fieldset>
-
 					<label for="time_settings">Timer: </label><br>
 					<input type="number" id="time_settings" name="time" value=""><br>
 					<label for="food_settings">number of balls(50-90):</label><br>
@@ -79,14 +78,15 @@
 					<input type="color" id="15_points_settings" name="15points"><br>
 					<label for="25_points_settings">color of 25 point</label><br>
 					<input type="color" id="25_points_settings" name="25points"><br>
-					<button onclick="upButton()">Choose up button</button><br>
-					<button onclick="downButton()">Choose down button</button><br>
-					<button onclick="rightButton()">Choose right button</button><br>
-					<button onclick="leftButton()">Choose left button</button><br>
-
-
+					<label for="up_settings">Choose up button</label><br>
+					<input name="up" id="up_settings"></input><br>
+					<label for="down_settings">Choose down button</label><br>
+					<input name="down" id="down_settings"></input><br>
+					<label for="right_settings">Choose right button</label><br>
+					<input name="right" id="right_settings"></input><br>
+					<label for="left_settings">Choose left button</label><br>
+					<input name="left" id="left_settings"></input><br><br>
 					<input id ="settings_button"class="submit" type="submit" value="submit"/>
-
 					<button onclick="randomizeSettings()">Random</button><br>
 				</fieldset>
 			</form>

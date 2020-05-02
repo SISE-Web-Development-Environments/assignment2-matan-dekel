@@ -11,31 +11,6 @@ function passwordCheck(value,element){
     return true;
 }
 
-function upButton(event){
-    $(document).keypress(function(e){
-        var up= String.fromCharCode(e.which);
-    });
-    scrollto("settings")
-}
-function downButton(event){
-    $(document).keypress(function(e){
-        var down= String.fromCharCode(e.which);
-    });
-    scrollto("settings")
-}
-
-function leftButton(event){
-    $(document).keypress(function(e){
-        var left= String.fromCharCode(e.which);
-    });
-    scrollto("settings")
-}
-function rightButton(event){
-    $(document).keypress(function(e){
-        var right= String.fromCharCode(e.which);
-    });
-    scrollto("settings")
-}
 
 
 $(function(){
@@ -85,6 +60,8 @@ $(function(){
     })
 });
 
+
+
 $(document).ready(function(){
     $("#register_form").submit(function(e){
         e.preventDefault()
@@ -99,6 +76,26 @@ $(document).ready(function(){
         //send parameters to gameva
         scrollto("main-page")
         Start()
+    })
+
+    $("#up_settings").keypress(function(e){
+        e.preventDefault()
+        alert(e.keyCode);
+    })
+
+    $("#down_settings").keypress(function(e){
+        e.preventDefault()
+        alert(e.keyCode);
+    })
+
+    $("#right_settings").keypress(function(e){
+        e.preventDefault()
+        alert(e.keyCode);
+    })
+
+    $("#left_settings").keypress(function(e){
+        e.preventDefault()
+        alert(e.keyCode);
     })
 
 })
