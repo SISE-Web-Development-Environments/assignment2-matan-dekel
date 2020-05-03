@@ -114,6 +114,8 @@ $(document).ready(function(){
         frmElement.value = e.keyCode;
       })
 
+      
+
 })
 
 function randomizeSettings(){
