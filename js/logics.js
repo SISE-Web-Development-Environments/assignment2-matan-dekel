@@ -74,7 +74,13 @@ $(document).ready(function(){
 
     $("#settings_form").submit(function(e){
         e.preventDefault();
-            alert(3)
+        up = $("#settings_form").find('input[name=up]').val();
+        down = $("#settings_form").find('input[name=down]').val();
+        right = $("#settings_form").find('input[name=right]').val();
+        left = $("#settings_form").find('input[name=left]').val();
+        points5 = $("#settings_form").find('input[name=5points]').val();
+        points15 = $("#settings_form").find('input[name=15points]').val();
+        points25 = $("#settings_form").find('input[name=25points]').val();
             //send parameters to gameva
             scrollto("main-page");
             Start();

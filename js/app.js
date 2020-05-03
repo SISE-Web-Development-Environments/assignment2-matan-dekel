@@ -3,6 +3,9 @@ var shape = new Object();
 var board;
 var score;
 var pac_color;
+var points5;
+var points15;
+var points25;
 var start_time;
 var time_elapsed;
 var interval;
@@ -14,10 +17,8 @@ var up;
 var down;
 var right;
 var left;
-
 $(document).ready(function() {
 	context = canvas.getContext("2d");
-	Start();
 });
 
 function Start() {
@@ -26,11 +27,6 @@ function Start() {
 	display = document.querySelector('#lblTime');
 	startTimer(time, display);	
 	delete time	
-	up = $("#settings_form").find('input[name=up]').val();
-	down = $("#settings_form").find('input[name=down]').val();
-	right = $("#settings_form").find('input[name=right]').val();
-	left = $("#settings_form").find('input[name=left]').val();
-
 
 	board = new Array();
 	score = 0;
@@ -122,6 +118,9 @@ function Start() {
 	addEventListener(
 		"keydown",
 		function(e) {
+			if(e.keyCode == up || e.keyCode == down || e.keyCode == right || e.keyCode == left){
+				e.preventDefault();
+			}
 			keysDown[e.keyCode] = true;
 		},
 		false
@@ -191,7 +190,6 @@ function GetKeyPressed() {
 }
 
 function Draw() {
-	
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
@@ -213,19 +211,19 @@ function Draw() {
 			} else if (board[i][j] == 5) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = $("#settings_form").find('input[5points]').val(); //color
+				context.fillStyle = points5;
 				context.fill();
 			} 
 			else if (board[i][j] == 15) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = $("#settings_form").find('input[15points]').val(); //color
+				context.fillStyle = points15;
 				context.fill();
 			}
 			else if (board[i][j] == 25) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = $("#settings_form").find('input[25points]').val(); //color
+				context.fillStyle = points25
 				context.fill();
 			}else if (board[i][j] == 4) {
 				context.beginPath();
