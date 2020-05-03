@@ -10,6 +10,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var emptyCells;
+var image;
 
 
 
@@ -26,6 +27,8 @@ function Start() {
 	let form = document.getElementById("settings_form")
 	let time = $("#settings_form").find('input[name=time]').val();
 	display = document.querySelector('#lblTime');
+	pac_image = new Image();
+	pac_image.src='./img/pacman-right.png';
 	startTimer(time, display);	
 	delete time	
 	board = new Array();
@@ -162,15 +165,7 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if (board[i][j] == 2) {
-				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
-				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
-				context.fill();
-				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
-				context.fill();
+				context.drawImage(pac_image,center.x-25,center.y-25);
 			} else if (board[i][j] == 5) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
@@ -204,21 +199,25 @@ function UpdatePosition() {
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
+			pac_image.src='./img/pacman-up.png';
 		}
 	}
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
+			pac_image.src='./img/pacman-down.png';
 		}
 	}
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
+			pac_image.src='./img/pacman-left.png';
 		}
 	}
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
+			pac_image.src='./img/pacman-right.png';
 		}
 	}
 	if (board[shape.i][shape.j] == 1) {
