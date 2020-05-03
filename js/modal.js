@@ -26,5 +26,5 @@ $(document).ready(function(){
         if(modal_shown && e.keyCode==27){
             closeModal();
         }
-        })
+    })
 })
