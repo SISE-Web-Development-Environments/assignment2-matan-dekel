@@ -9,6 +9,7 @@ var points25;
 var start_time;
 var time_elapsed;
 var interval;
+var emptyCells;
 
 
 
@@ -27,15 +28,15 @@ function Start() {
 	display = document.querySelector('#lblTime');
 	startTimer(time, display);	
 	delete time	
-
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 100;
-	var food_remain = $("#settings_form").find('input[name=food]').val();
-	var fivePoints=food_remain*0.6;
-	var fifteenPoints=food_remain*0.3
-	var twentyFivePoints=food_remain*0.1;
+	emptyCells = new Array()
+	let food_remain = $("#settings_form").find('input[name=food]').val();
+	let fifteenPoints=Math.floor(food_remain*0.3);
+	let twentyFivePoints=Math.floor(food_remain*0.1);
+	let fivePoints=food_remain-(fifteenPoints+twentyFivePoints);
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -47,73 +48,39 @@ function Start() {
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
 				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
-			) {
+				(i == 6 && j == 2)) {
 				board[i][j] = 4;
-			} else {
-				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
-					var secondRandomNum = Math.random();
-					if(secondRandomNum<1/3){
-						if(fivePoints>0){
-							board[i][j] = 5;
-							fivePoints--;
-						}
-						else if(fifteenPoints>0){
-								board[i][j] = 15;
-								fifteenPoints--;
-							}	
-							else if(twentyFivePoints>0){
-								board[i][j] = 15;
-								fifteenPoints--;
-							}
-							else if (secondRandomNum<2/3){
-								if(fifteenPoints>0){
-									board[i][j] = 15;
-									fifteenPoints--;
-								}
-								else if(twentyFivePoints>0){
-									board[i][j] = 25;
-									twentyFivePoints--;
-									}	
-									else if(fivePoints>0){
-										board[i][j] = 5;
-										fivePoints--;
-									}
-							}
-							else{
-								if(twentyFivePoints>0){
-									board[i][j] = 25;
-									twentyFivePoints--;
-									}
-									else if(fivePoints>0){
-										board[i][j] = 5;
-										fivePoints--;
-									}
-									else if(fifteenPoints>0){
-										board[i][j] = 15;
-										fifteenPoints--;
-									}	
-							}
-					}
-					food_remain--;
-				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-					shape.i = i;
-					shape.j = j;
-					pacman_remain--;
-					board[i][j] = 2;
-				} else {
-					board[i][j] = 0;
-				}
-				cnt--;
+			}
+			else{
+				board[i][j]=0;
+				let d={"x" : "y"}
+				d.x=i;
+				d.y=j;
+				emptyCells.push(d);
 			}
 		}
 	}
-	while (food_remain > 0) {
-		var emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
+	while(fivePoints>0){
+		let emptyCell = findRandomEmptyCell(board);
+		board[emptyCell[0]][emptyCell[1]] = 5;
+		fivePoints--;
 		food_remain--;
 	}
+	while(fifteenPoints>0){
+		let emptyCell = findRandomEmptyCell(board)
+		board[emptyCell[0]][emptyCell[1]] = 15;
+		fifteenPoints--;
+		food_remain--;
+	}
+	while(twentyFivePoints>0){
+		let emptyCell = findRandomEmptyCell(board)
+		board[emptyCell[0]][emptyCell[1]] = 25;
+		twentyFivePoints--;
+		food_remain--;
+	}
+	let emptyCell = findRandomEmptyCell()
+	shape.i = emptyCell[0];
+	shape.j = emptyCell[1];
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -133,8 +100,8 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
+	audio.play();
 }
-
 	function startTimer(duration, display) {
 		let timer = duration, minutes, seconds;
 		setInterval(function () {
@@ -164,14 +131,10 @@ function Start() {
 
 
 function findRandomEmptyCell(board) {
-	audio.play();
-	var i = Math.floor(Math.random() * 9 + 1);
-	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 9 + 1);
-		j = Math.floor(Math.random() * 9 + 1);
-	}
-	return [i, j];
+	let i = Math.floor(Math.random() * Math.floor(emptyCells.length-1) );
+	let cell = emptyCells[i];
+	emptyCells.splice(i,1)
+	return [cell.x,cell.y];
 }
 
 function GetKeyPressed() {
@@ -236,7 +199,6 @@ function Draw() {
 }
 
 function UpdatePosition() {
-
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
 	if (x == 1) {
