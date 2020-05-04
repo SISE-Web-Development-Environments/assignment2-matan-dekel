@@ -10,7 +10,7 @@ var time_elapsed;
 var interval;
 var emptyCells;
 var image;
-
+var counter;
 
 var audio = new Audio('music/pacman.mp3');
 var up;
@@ -22,10 +22,13 @@ $(document).ready(function () {
 });
 
 function Start() {
+	window.clearInterval(interval)
 	let form = document.getElementById("settings_form")
 	score = 0;
+	clearInterval(counter)
+	var display = document.querySelector('#lblTime');
 	var count = $("#settings_form").find('input[name=time]').val();
-	var counter = setInterval(timer, 1000); //1000 will  run it every 1 second
+	counter = setInterval(timer, 1000); //1000 will  run it every 1 second
 	function timer() {
 		count = count - 1;
 		if (count <= 0) {
@@ -43,7 +46,6 @@ function Start() {
 		display.textContent = count; // watch for spelling
 	}
 
-	var display = document.querySelector('#lblTime');
 	pac_image = new Image();
 	pac_image.src = './img/pacman-right.png';
 	// startTimer(display);	
