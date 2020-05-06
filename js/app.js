@@ -14,6 +14,7 @@ var counter;
 var monster_position;
 var ghost_image;
 var monster_starts;
+var pacman_life;
 var username;
 
 var audio = new Audio('music/pacman.mp3');
@@ -62,7 +63,7 @@ function Start() {
 		}
 		display.textContent = count;
 	}
-
+	pacman_life = 5;
 	pac_image = new Image();
 	pac_image.src = './img/pacman-right.png';
 	clock_image = new Image();
@@ -99,18 +100,8 @@ function Start() {
 			}
 		}
 	}
-	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
-	monster_position = new Array();
-	monster_starts = new Array();
-	monster_starts.push([0, 0]);
-	monster_starts.push([0, 9]);
-	monster_starts.push([9, 0]);
-	monster_starts.push([9, 9]);
-	while (num_of_monster > 0) {
-		let emptyCell = getNextMonsterCell();
-		monster_position.push(emptyCell);
-		num_of_monster--;
-	}
+	placeMonsters();
+
 	while (fivePoints > 0) {
 		let emptyCell = findRandomEmptyCell(board);
 		board[emptyCell[0]][emptyCell[1]] = 5;
@@ -284,23 +275,32 @@ function UpdatePosition() {
 	let d = { "x": "y" }
 	d.x = shape.i;
 	d.y = shape.j;
-	if (board[shape.i][shape.j] == 1) {
+	if (isMonsterCell(shape.i, shape.j)) {
+		pacman_life--;
+		if(pacman_life<=0){
+			gameOver();
+		}
+		else{
+			startAgain();
+		}
+	}
+	else if (board[shape.i][shape.j] == 1) {
 		score++;
 		emptyCells.push(d);
 	}
-	if (board[shape.i][shape.j] == 5) {
+	else if (board[shape.i][shape.j] == 5) {
 		score = score + 5;
 		emptyCells.push(d);
 	}
-	if (board[shape.i][shape.j] == 15) {
+	else if (board[shape.i][shape.j] == 15) {
 		score = score + 15;
 		emptyCells.push(d);
 	}
-	if (board[shape.i][shape.j] == 25) {
+	else if (board[shape.i][shape.j] == 25) {
 		score = score + 25;
 		emptyCells.push(d);
 	}
-	if (board[shape.i][shape.j] == 40) {
+	else if (board[shape.i][shape.j] == 40) {
 		x = (Math.floor(Math.random() * 2) == 0);
 		emptyCells.push(d);
 		if (x) {
@@ -309,16 +309,48 @@ function UpdatePosition() {
 			score = score - 40;
 		}
 	}
-	if (board[shape.i][shape.j] == 100) {
+	else if (board[shape.i][shape.j] == 100) {
 		tookclock = 1;
 		emptyCells.push(d);
 	}
-	if (isMonsterCell(shape.i, shape.j)) {
-		alert("touched monster");
-	}
+
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	Draw();
 }
 
+function gameOver(){
+
+}
+
+function startAgain(){
+	//remove one life picture
+	let picture_id ="life" + pacman_life ;
+	document.getElementById(picture_id).style.display=("none");
+	//replace monster in cornners
+	placeMonsters();
+	//put pacman in random position
+	nextPacCell = findRandomEmptyCell();
+	console.log(nextPacCell);
+	emptyCells.push([shape.i,shape.j]);
+	shape.i = nextPacCell[0];
+	shape.j = nextPacCell[1];
+	//remove 10 points
+	score -=10;
+}
+
+function placeMonsters(){
+	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
+	monster_position = new Array();
+	monster_starts = new Array();
+	monster_starts.push([0, 0]);
+	monster_starts.push([0, 9]);
+	monster_starts.push([9, 0]);
+	monster_starts.push([9, 9]);
+	while (num_of_monster > 0) {
+		let emptyCell = getNextMonsterCell();
+		monster_position.push(emptyCell);
+		num_of_monster--;
+	}
+}
