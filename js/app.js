@@ -310,6 +310,9 @@ function UpdatePosition() {
 		tookclock = 1;
 		emptyCells.push(d);
 	}
+	if(isMonsterCell(shape.i,shape.j)){
+		alert("touched monster");
+	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
