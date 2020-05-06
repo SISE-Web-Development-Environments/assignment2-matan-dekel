@@ -14,6 +14,7 @@ var counter;
 var monster_position;
 var ghost_image;
 var monster_starts;
+var username;
 
 var audio = new Audio('music/pacman.mp3');
 var up;
@@ -30,11 +31,13 @@ function Start() {
 	let form = document.getElementById("settings_form");
 	score = 0;
 	clearInterval(counter);
+	username = document.querySelector('#lblUsername');
+	username.textContent = $("#login_form").find('input[name=name]').val();
 	var display = document.querySelector('#lblTime');
 	var count = $("#settings_form").find('input[name=time]').val();
 	var specialPoints = 1;
 	var clocks = 1;
-	
+
 	tookclock = 0;
 	counter = setInterval(timer, 1000); //1000 will  run it every 1 second
 	function timer() {
@@ -73,7 +76,7 @@ function Start() {
 	let fifteenPoints = Math.floor(food_remain * 0.3);
 	let twentyFivePoints = Math.floor(food_remain * 0.1);
 	let fivePoints = food_remain - (fifteenPoints + twentyFivePoints);
-	
+
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
@@ -99,11 +102,11 @@ function Start() {
 	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
 	monster_position = new Array();
 	monster_starts = new Array();
-	monster_starts.push([0,0]);
-	monster_starts.push([0,9]);
-	monster_starts.push([9,0]);
-	monster_starts.push([9,9]);
-	while (num_of_monster > 0){
+	monster_starts.push([0, 0]);
+	monster_starts.push([0, 9]);
+	monster_starts.push([9, 0]);
+	monster_starts.push([9, 9]);
+	while (num_of_monster > 0) {
 		let emptyCell = getNextMonsterCell();
 		monster_position.push(emptyCell);
 		num_of_monster--;
@@ -164,7 +167,7 @@ function Start() {
 
 
 
-function getNextMonsterCell(){
+function getNextMonsterCell() {
 	return monster_starts.pop();
 }
 
@@ -191,11 +194,11 @@ function GetKeyPressed() {
 	}
 }
 
-function isMonsterCell(i,j){
+function isMonsterCell(i, j) {
 	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
 	num_of_monster--;
-	while(num_of_monster>=0){
-		if(monster_position[num_of_monster][0]== i &&  monster_position[num_of_monster][1]== j){
+	while (num_of_monster >= 0) {
+		if (monster_position[num_of_monster][0] == i && monster_position[num_of_monster][1] == j) {
 			return true;
 		}
 		num_of_monster--;
@@ -210,9 +213,9 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if(isMonsterCell(i,j)){
+			if (isMonsterCell(i, j)) {
 				context.drawImage(ghost_image, center.x - 25, center.y - 25);
-			}else if (board[i][j] == 2) {
+			} else if (board[i][j] == 2) {
 				context.drawImage(pac_image, center.x - 25, center.y - 25);
 			} else if (board[i][j] == 5) {
 				context.beginPath();
@@ -310,7 +313,7 @@ function UpdatePosition() {
 		tookclock = 1;
 		emptyCells.push(d);
 	}
-	if(isMonsterCell(shape.i,shape.j)){
+	if (isMonsterCell(shape.i, shape.j)) {
 		alert("touched monster");
 	}
 	board[shape.i][shape.j] = 2;
