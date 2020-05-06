@@ -17,6 +17,7 @@ var up;
 var down;
 var right;
 var left;
+var tookclock;
 $(document).ready(function () {
 	context = canvas.getContext("2d");
 });
@@ -28,8 +29,17 @@ function Start() {
 	clearInterval(counter)
 	var display = document.querySelector('#lblTime');
 	var count = $("#settings_form").find('input[name=time]').val();
+	var specialPoints = 1;
+	var clocks = 1;
+	tookclock = 0;
 	counter = setInterval(timer, 1000); //1000 will  run it every 1 second
 	function timer() {
+		if (tookclock == 1) {
+			tookclock = 0;
+			count = count + 15;
+			display.textContent = count;
+
+		}
 		count = count - 1;
 		if (count <= 0) {
 			clearInterval(counter);
@@ -40,15 +50,16 @@ function Start() {
 			else {
 				alert("Winner!!!");
 				window.clearInterval(interval)
-	
+
 			}
 		}
-		display.textContent = count; // watch for spelling
+		display.textContent = count;
 	}
 
 	pac_image = new Image();
 	pac_image.src = './img/pacman-right.png';
-	// startTimer(display);	
+	clock_image = new Image();
+	clock_image.src = './img/clock.png';
 	board = new Array();
 	var cnt = 100;
 	emptyCells = new Array()
@@ -97,6 +108,17 @@ function Start() {
 		twentyFivePoints--;
 		food_remain--;
 	}
+	while (specialPoints > 0) {
+		let emptyCell = findRandomEmptyCell(board)
+		board[emptyCell[0]][emptyCell[1]] = 40;
+		specialPoints--;
+		food_remain--;
+	}
+	while (clocks > 0) {
+		let emptyCell = findRandomEmptyCell(board)
+		board[emptyCell[0]][emptyCell[1]] = 100;
+		clocks--;
+	}
 	let emptyCell = findRandomEmptyCell()
 	shape.i = emptyCell[0];
 	shape.j = emptyCell[1];
@@ -124,38 +146,6 @@ function Start() {
 
 
 
-// function startTimer(display) {
-// 	duration = $("#settings_form").find('input[name=time]').val();
-// 	let timer = duration, minutes, seconds;
-// 	setInterval(function () {
-// 		minutes = parseInt(timer / 60, 10);
-// 		seconds = parseInt(timer % 60, 10);
-// 		minutes = minutes < 10 ? "0" + minutes : minutes;
-// 		seconds = seconds < 10 ? "0" + seconds : seconds;
-// 		display.textContent = minutes + ":" + seconds;
-
-// 		if (--timer < 0) {
-// 			timer = 0;
-// 		}
-// 		else{
-// 			if (timer===0){
-// 				if(score<100){
-// 					alert("You are better than "+score+" points");
-// 					delete display.textContent
-// 					$("#time lblTime").empty();
-// 					window.clearInterval(interval)
-// 				}
-// 					else{
-// 						alert("Winner!!!");
-// 						delete display.textContent
-// 						$("#time").empty();
-// 						window.clearInterval(interval)
-
-// 					}
-// 				}
-// 		}
-// 	}, 1000);
-// }
 
 
 function findRandomEmptyCell(board) {
@@ -213,9 +203,19 @@ function Draw() {
 				context.fillStyle = "grey"; //color
 				context.fill();
 			}
+			else if (board[i][j] == 40) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = "black"; //color
+				context.fill();
+			}
+			else if (board[i][j] == 100) {
+				context.drawImage(clock_image, center.x - 25, center.y - 25);
+			}
 		}
 	}
 }
+
 
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
@@ -255,6 +255,17 @@ function UpdatePosition() {
 	}
 	if (board[shape.i][shape.j] == 25) {
 		score = score + 25;
+	}
+	if (board[shape.i][shape.j] == 40) {
+		x = (Math.floor(Math.random() * 2) == 0);
+		if (x) {
+			score = score + 40;
+		} else {
+			score = score - 40;
+		}
+	}
+	if (board[shape.i][shape.j] == 100) {
+		tookclock = 1;
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
