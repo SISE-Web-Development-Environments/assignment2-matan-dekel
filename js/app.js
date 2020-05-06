@@ -8,6 +8,9 @@ var points25;
 var start_time;
 var time_elapsed;
 var interval;
+var monsterInterval;
+var distance;
+
 var emptyCells;
 var image;
 var counter;
@@ -28,7 +31,11 @@ $(document).ready(function () {
 });
 
 function Start() {
+	for (var i = 0; i < 5; i++) {
+		document.getElementById("life" + i).style.display = ("inline");
+	}
 	window.clearInterval(interval);
+	window.clearInterval(monsterInterval);
 	let form = document.getElementById("settings_form");
 	score = 0;
 	clearInterval(counter);
@@ -54,15 +61,18 @@ function Start() {
 			if (score < 100) {
 				alert("You are better than " + score + " points");
 				window.clearInterval(interval)
+				window.clearInterval(monsterInterval)
 			}
 			else {
 				alert("Winner!!!");
 				window.clearInterval(interval)
-
+				window.clearInterval(monsterInterval)
 			}
 		}
 		display.textContent = count;
 	}
+
+
 	pacman_life = 5;
 	pac_image = new Image();
 	pac_image.src = './img/pacman-right.png';
@@ -152,11 +162,52 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);
 	audio.play();
+
+	interval = setInterval(UpdatePosition, 100);
+	monsterInterval = setInterval(moveMonsters, 1000);
+
 }
 
+function moveMonsters() {
+	let num = $("#settings_form").find('input[name=monsters]').val();
+	for (var i = 0; i < num; i++) {
+		UpdateMonsterPosition(i, whereMonsterGoes(i));
+	}
+}
 
+function whereMonsterGoes(i) {
+	distance = 300000;
+	distance = getEuclideanDistance(monster_position[i][0] + 1, monster_position[i][1], shape.i, shape.j)
+	if (distance > getEuclideanDistance(monster_position[i][0], monster_position[i][1] + 1, shape.i, shape.j)) {
+		distance = getEuclideanDistance(monster_position[i][0], monster_position[i][1] + 1, shape.i, shape.j);
+	}
+	if (distance > getEuclideanDistance(monster_position[i][0] - 1, monster_position[i][1], shape.i, shape.j)) {
+		distance = getEuclideanDistance(monster_position[i][0] - 1, monster_position[i][1], shape.i, shape.j)
+	}
+	if(distance>getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)){
+		distance=getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)
+	}
+	if (distance == getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)) {
+		return 1;
+	}
+	else if (distance == getEuclideanDistance(monster_position[i][0], monster_position[i][1] + 1, shape.i, shape.j)) {
+		return 2;
+	}
+	else if (distance == getEuclideanDistance(monster_position[i][0] - 1, monster_position[i][1], shape.i, shape.j)) {
+		return 3;
+	}
+	else if (distance == getEuclideanDistance(monster_position[i][0] + 1, monster_position[i][1], shape.i, shape.j)) {
+		return 4;
+	}
+
+
+}
+function getEuclideanDistance(x1, y1, x2, y2) {
+	var a = x1 - x2;
+	var b = y1 - y2;
+	return Math.sqrt(a * a + b * b);
+}
 
 function getNextMonsterCell() {
 	return monster_starts.pop();
@@ -245,6 +296,36 @@ function Draw() {
 }
 
 
+
+
+function UpdateMonsterPosition(monster, x) {
+	if (x == 1) {
+		if (monster_position[monster][1] > 0 && board[monster_position[monster][0]][monster_position[monster][1] - 1] != 4) {
+			monster_position[monster][1]--;
+		}
+	}
+	if (x == 2) {
+		if (monster_position[monster][1] < 9 && board[monster_position[monster][0]][monster_position[monster][1] + 1] != 4) {
+			monster_position[monster][1]++;
+		}
+	}
+	if (x == 3) {
+		if (monster_position[monster][0] > 0 && board[monster_position[monster][0]-1][monster_position[monster][1]] != 4) {
+			monster_position[monster][0]--;
+		}
+	}
+	if (x == 4) {
+		if (monster_position[monster][0] < 9 && board[monster_position[monster][0]+1][monster_position[monster][1]] != 4) {
+			monster_position[monster][0]++;
+		}
+	}
+
+}
+
+
+
+
+
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
@@ -277,10 +358,10 @@ function UpdatePosition() {
 	d.y = shape.j;
 	if (isMonsterCell(shape.i, shape.j)) {
 		pacman_life--;
-		if(pacman_life<=0){
+		if (pacman_life <= 0) {
 			gameOver();
 		}
-		else{
+		else {
 			startAgain();
 		}
 	}
@@ -320,27 +401,34 @@ function UpdatePosition() {
 	Draw();
 }
 
-function gameOver(){
+function gameOver() {
+	//remove one life picture
+	let picture_id = "life" + pacman_life;
+	document.getElementById(picture_id).style.display = ("none");
+	clearInterval(counter);
+	window.clearInterval(interval)
+	window.clearInterval(monsterInterval)
 
+	alert("Loser!")
 }
 
-function startAgain(){
+function startAgain() {
 	//remove one life picture
-	let picture_id ="life" + pacman_life ;
-	document.getElementById(picture_id).style.display=("none");
+	let picture_id = "life" + pacman_life;
+	document.getElementById(picture_id).style.display = ("none");
 	//replace monster in cornners
 	placeMonsters();
 	//put pacman in random position
 	nextPacCell = findRandomEmptyCell();
 	console.log(nextPacCell);
-	emptyCells.push([shape.i,shape.j]);
+	emptyCells.push([shape.i, shape.j]);
 	shape.i = nextPacCell[0];
 	shape.j = nextPacCell[1];
 	//remove 10 points
-	score -=10;
+	score -= 10;
 }
 
-function placeMonsters(){
+function placeMonsters() {
 	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
 	monster_position = new Array();
 	monster_starts = new Array();
@@ -354,3 +442,4 @@ function placeMonsters(){
 		num_of_monster--;
 	}
 }
+
