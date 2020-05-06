@@ -11,6 +11,9 @@ var interval;
 var emptyCells;
 var image;
 var counter;
+var monster_position;
+var ghost_image;
+var monster_starts;
 
 var audio = new Audio('music/pacman.mp3');
 var up;
@@ -23,14 +26,15 @@ $(document).ready(function () {
 });
 
 function Start() {
-	window.clearInterval(interval)
-	let form = document.getElementById("settings_form")
+	window.clearInterval(interval);
+	let form = document.getElementById("settings_form");
 	score = 0;
-	clearInterval(counter)
+	clearInterval(counter);
 	var display = document.querySelector('#lblTime');
 	var count = $("#settings_form").find('input[name=time]').val();
 	var specialPoints = 1;
 	var clocks = 1;
+	
 	tookclock = 0;
 	counter = setInterval(timer, 1000); //1000 will  run it every 1 second
 	function timer() {
@@ -60,6 +64,8 @@ function Start() {
 	pac_image.src = './img/pacman-right.png';
 	clock_image = new Image();
 	clock_image.src = './img/clock.png';
+	ghost_image = new Image();
+	ghost_image.src = './img/ghost.png';
 	board = new Array();
 	var cnt = 100;
 	emptyCells = new Array()
@@ -67,7 +73,7 @@ function Start() {
 	let fifteenPoints = Math.floor(food_remain * 0.3);
 	let twentyFivePoints = Math.floor(food_remain * 0.1);
 	let fivePoints = food_remain - (fifteenPoints + twentyFivePoints);
-	var pacman_remain = 1;
+	
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
@@ -89,6 +95,18 @@ function Start() {
 				emptyCells.push(d);
 			}
 		}
+	}
+	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
+	monster_position = new Array();
+	monster_starts = new Array();
+	monster_starts.push([0,0]);
+	monster_starts.push([0,9]);
+	monster_starts.push([9,0]);
+	monster_starts.push([9,9]);
+	while (num_of_monster > 0){
+		let emptyCell = getNextMonsterCell();
+		monster_position.push(emptyCell);
+		num_of_monster--;
 	}
 	while (fivePoints > 0) {
 		let emptyCell = findRandomEmptyCell(board);
@@ -146,7 +164,9 @@ function Start() {
 
 
 
-
+function getNextMonsterCell(){
+	return monster_starts.pop();
+}
 
 function findRandomEmptyCell(board) {
 	let i = Math.floor(Math.random() * Math.floor(emptyCells.length - 1));
@@ -171,6 +191,18 @@ function GetKeyPressed() {
 	}
 }
 
+function isMonsterCell(i,j){
+	let num_of_monster = $("#settings_form").find('input[name=monsters]').val();
+	num_of_monster--;
+	while(num_of_monster>=0){
+		if(monster_position[num_of_monster][0]== i &&  monster_position[num_of_monster][1]== j){
+			return true;
+		}
+		num_of_monster--;
+	}
+	return false;
+}
+
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	for (var i = 0; i < 10; i++) {
@@ -178,7 +210,9 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if (board[i][j] == 2) {
+			if(isMonsterCell(i,j)){
+				context.drawImage(ghost_image, center.x - 25, center.y - 25);
+			}else if (board[i][j] == 2) {
 				context.drawImage(pac_image, center.x - 25, center.y - 25);
 			} else if (board[i][j] == 5) {
 				context.beginPath();
@@ -244,20 +278,28 @@ function UpdatePosition() {
 			pac_image.src = './img/pacman-right.png';
 		}
 	}
+	let d = { "x": "y" }
+	d.x = shape.i;
+	d.y = shape.j;
 	if (board[shape.i][shape.j] == 1) {
 		score++;
+		emptyCells.push(d);
 	}
 	if (board[shape.i][shape.j] == 5) {
 		score = score + 5;
+		emptyCells.push(d);
 	}
 	if (board[shape.i][shape.j] == 15) {
 		score = score + 15;
+		emptyCells.push(d);
 	}
 	if (board[shape.i][shape.j] == 25) {
 		score = score + 25;
+		emptyCells.push(d);
 	}
 	if (board[shape.i][shape.j] == 40) {
 		x = (Math.floor(Math.random() * 2) == 0);
+		emptyCells.push(d);
 		if (x) {
 			score = score + 40;
 		} else {
@@ -266,6 +308,7 @@ function UpdatePosition() {
 	}
 	if (board[shape.i][shape.j] == 100) {
 		tookclock = 1;
+		emptyCells.push(d);
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
