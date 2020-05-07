@@ -164,8 +164,8 @@ function Start() {
 	);
 	audio.play();
 
-	interval = setInterval(UpdatePosition, 100);
-	monsterInterval = setInterval(moveMonsters, 1000);
+	interval = setInterval(UpdatePosition, 150);
+	monsterInterval = setInterval(moveMonsters, 575);
 
 }
 
@@ -185,8 +185,8 @@ function whereMonsterGoes(i) {
 	if (distance > getEuclideanDistance(monster_position[i][0] - 1, monster_position[i][1], shape.i, shape.j)) {
 		distance = getEuclideanDistance(monster_position[i][0] - 1, monster_position[i][1], shape.i, shape.j)
 	}
-	if(distance>getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)){
-		distance=getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)
+	if (distance > getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)) {
+		distance = getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)
 	}
 	if (distance == getEuclideanDistance(monster_position[i][0], monster_position[i][1] - 1, shape.i, shape.j)) {
 		return 1;
@@ -299,27 +299,50 @@ function Draw() {
 
 
 function UpdateMonsterPosition(monster, x) {
-	if (x == 1) {
-		if (monster_position[monster][1] > 0 && board[monster_position[monster][0]][monster_position[monster][1] - 1] != 4) {
+
+	if (Math.random() > 0.4) {
+		if (x == 1) {
+			if (!isMonsterCell(monster_position[monster][0], monster_position[monster][1] - 1) && monster_position[monster][1] > 0 && board[monster_position[monster][0]][monster_position[monster][1] - 1] != 4) {
+				monster_position[monster][1]--;
+			}
+		}
+		if (x == 2) {
+			if (!isMonsterCell(monster_position[monster][0], monster_position[monster][1] + 1) && monster_position[monster][1] < 9 && board[monster_position[monster][0]][monster_position[monster][1] + 1] != 4) {
+				monster_position[monster][1]++;
+			}
+		}
+		if (x == 3) {
+			if (!isMonsterCell(monster_position[monster][0] - 1, monster_position[monster][1]) && monster_position[monster][0] > 0 && board[monster_position[monster][0] - 1][monster_position[monster][1]] != 4) {
+				monster_position[monster][0]--;
+			}
+		}
+		if (x == 4) {
+			if (!isMonsterCell(monster_position[monster][0] + 1, monster_position[monster][1]) && monster_position[monster][0] < 9 && board[monster_position[monster][0] + 1][monster_position[monster][1]] != 4) {
+				monster_position[monster][0]++;
+			}
+		}
+	}
+	else {
+		x = Math.random()
+		if (x < 0.25 && !isMonsterCell(monster_position[monster][0], monster_position[monster][1] - 1) && monster_position[monster][1] > 0 && board[monster_position[monster][0]][monster_position[monster][1] - 1] != 4) {
 			monster_position[monster][1]--;
 		}
-	}
-	if (x == 2) {
-		if (monster_position[monster][1] < 9 && board[monster_position[monster][0]][monster_position[monster][1] + 1] != 4) {
-			monster_position[monster][1]++;
+		else {
+			if (x < 0.5 && !isMonsterCell(monster_position[monster][0], monster_position[monster][1] + 1) && monster_position[monster][1] < 9 && board[monster_position[monster][0]][monster_position[monster][1] + 1] != 4) {
+				monster_position[monster][1]++;
+			}
+			else {
+				if (x < 0.75 && !isMonsterCell(monster_position[monster][0] - 1, monster_position[monster][1]) && monster_position[monster][0] > 0 && board[monster_position[monster][0] - 1][monster_position[monster][1]] != 4) {
+					monster_position[monster][0]--;
+				}
+				else {
+					if (!isMonsterCell(monster_position[monster][0] + 1, monster_position[monster][1]) && monster_position[monster][0] < 9 && board[monster_position[monster][0] + 1][monster_position[monster][1]] != 4) {
+						monster_position[monster][0]++;
+					}
+				}
+			}
 		}
 	}
-	if (x == 3) {
-		if (monster_position[monster][0] > 0 && board[monster_position[monster][0]-1][monster_position[monster][1]] != 4) {
-			monster_position[monster][0]--;
-		}
-	}
-	if (x == 4) {
-		if (monster_position[monster][0] < 9 && board[monster_position[monster][0]+1][monster_position[monster][1]] != 4) {
-			monster_position[monster][0]++;
-		}
-	}
-
 }
 
 
