@@ -113,9 +113,29 @@
 
 			</div>
 			<button onclick="Start()" class="btn">Restart</button>
+			
 			<div id="game">
-				<canvas id="canvas" height="600" width="600"></canvas>
+				<table>
+					<canvas id="canvas" height="600" width="600" style=" float: left;"></canvas>
+					<div style="float: right;">
+						Settings:
+						<ul>
+							<li>time settings: <textarea readonly id="time_settings_read"></textarea></li><br>
+							<li>number of food balls: <textarea readonly id="food_settings_read"></textarea></li><br>
+							<li>number of monsters: <textarea readonly id="monster_settings_read"></textarea></li><br>
+							<li>color of 5 point: <div id="5_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div></li><br>
+							<li>color of 15 point:<div id="15_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div> </li><br>
+							<li>color of 25 point: <div id="25_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div></li><br>
+							<li>up button:<textarea readonly id="up_settings_read"></textarea> </li><br>
+							<li>down button: <textarea readonly id="down_settings_read"></textarea></li><br>
+							<li>right button: <textarea readonly id="right_settings_read"></textarea></li><br>
+							<li>left button:<textarea readonly id="left_settings_read"></textarea> </li><br>
+						</ul>
+					</div>
+				</table>
+				
 			</div>
+		
 		</div>
 	</section>
 
