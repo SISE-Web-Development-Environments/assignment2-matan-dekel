@@ -9,16 +9,23 @@ var start_time;
 var time_elapsed;
 var interval;
 var monsterInterval;
+var candyInterval;
 var distance;
+var toEat;
 
 var emptyCells;
 var image;
 var counter;
 var monster_position;
+var candy_position;
+
 var ghost_image;
+var candy_image;
+var num_of_candies;
 var monster_starts;
 var pacman_life;
 var username;
+var foodEaten;
 
 var audio = new Audio('music/pacman.mp3');
 var up;
@@ -30,13 +37,13 @@ $(document).ready(function () {
 	context = canvas.getContext("2d");
 });
 
-function setSettings(){
+function setSettings() {
 	$("#time_settings_read").val($("#settings_form").find('input[name=time]').val());
 	$("#food_settings_read").val($("#settings_form").find('input[name=food]').val());
 	$("#monster_settings_read").val($("#settings_form").find('input[name=monsters]').val());
-	$("#5_points_settings_read").css({'background-color' : ""+$("#settings_form").find('input[name=5points]').val()});
-	$("#15_points_settings_read").css({'background-color' : ""+$("#settings_form").find('input[name=15points]').val()});
-	$("#25_points_settings_read").css({'background-color' : ""+$("#settings_form").find('input[name=25points]').val()});
+	$("#5_points_settings_read").css({ 'background-color': "" + $("#settings_form").find('input[name=5points]').val() });
+	$("#15_points_settings_read").css({ 'background-color': "" + $("#settings_form").find('input[name=15points]').val() });
+	$("#25_points_settings_read").css({ 'background-color': "" + $("#settings_form").find('input[name=25points]').val() });
 	let key = $("#settings_form").find('input[name=up]').val();
 	$("#up_settings_read").val(keyboardMap[key]);
 	key = $("#settings_form").find('input[name=down]').val();
@@ -52,8 +59,13 @@ function Start() {
 		document.getElementById("life" + i).style.display = ("inline");
 	}
 	setSettings()
+	foodEaten = 0;
+	num_of_candies = 1;
+	toEat = $("#settings_form").find('input[name=food]').val();
+	toEat++;
 	window.clearInterval(interval);
 	window.clearInterval(monsterInterval);
+	window.clearInterval(candyInterval);
 	let form = document.getElementById("settings_form");
 	score = 0;
 	clearInterval(counter);
@@ -71,7 +83,10 @@ function Start() {
 			tookclock = 0;
 			count = count + 15;
 			display.textContent = count;
-
+		}
+		if (foodEaten == toEat) {
+			count = 0;
+			display.textContent = count;
 		}
 		count = count - 1;
 		if (count <= 0) {
@@ -80,11 +95,15 @@ function Start() {
 				alert("You are better than " + score + " points");
 				window.clearInterval(interval)
 				window.clearInterval(monsterInterval)
+				window.clearInterval(candyInterval);
+
 			}
 			else {
 				alert("Winner!!!");
 				window.clearInterval(interval)
 				window.clearInterval(monsterInterval)
+				window.clearInterval(candyInterval);
+
 			}
 		}
 		display.textContent = count;
@@ -98,12 +117,15 @@ function Start() {
 	clock_image.src = './img/clock.png';
 	ghost_image = new Image();
 	ghost_image.src = './img/ghost.png';
+	candy_image = new Image();
+	candy_image.src = './img/extraPoints.png';
 	board = new Array();
+	candy_position = new Array();
 	var cnt = 100;
 	emptyCells = new Array()
 	let food_remain = $("#settings_form").find('input[name=food]').val();
-	let fifteenPoints = Math.floor(food_remain * 0.3);
-	let twentyFivePoints = Math.floor(food_remain * 0.1);
+	let fifteenPoints = Math.round(food_remain * 0.3);
+	let twentyFivePoints = Math.round(food_remain * 0.1);
 	let fivePoints = food_remain - (fifteenPoints + twentyFivePoints);
 
 	start_time = new Date();
@@ -152,12 +174,17 @@ function Start() {
 		let emptyCell = findRandomEmptyCell(board)
 		board[emptyCell[0]][emptyCell[1]] = 40;
 		specialPoints--;
-		food_remain--;
 	}
 	while (clocks > 0) {
 		let emptyCell = findRandomEmptyCell(board)
 		board[emptyCell[0]][emptyCell[1]] = 100;
 		clocks--;
+	}
+	while (num_of_candies > 0) {
+		let emptyCell = findRandomEmptyCell(board)
+		candy_position[0] = emptyCell[0];
+		candy_position[1] = emptyCell[1];
+		num_of_candies--;
 	}
 	let emptyCell = findRandomEmptyCell()
 	shape.i = emptyCell[0];
@@ -184,8 +211,36 @@ function Start() {
 
 	interval = setInterval(UpdatePosition, 150);
 	monsterInterval = setInterval(moveMonsters, 575);
+	candyInterval = setInterval(moveCandy, 250)
+
 
 }
+
+function moveCandy() {
+	x = Math.random()
+	board[candy_position[0]][candy_position[1]] = 0;
+	if (x < 0.25 && !isMonsterCell(candy_position[0], candy_position[1] - 1) && candy_position[1] > 0 && board[candy_position[0]][candy_position[1] - 1] != 4) {
+		candy_position[1]--;
+	}
+	else {
+		if (x < 0.5 && !isMonsterCell(candy_position[0], candy_position[1] + 1) && candy_position[1] < 9 && board[candy_position[0]][candy_position[1] + 1] != 4) {
+			candy_position[1]++;
+		}
+		else {
+			if (x < 0.5 && !isMonsterCell(candy_position[0] - 1, candy_position[1]) && candy_position[0] > 0 && board[candy_position[0] - 1][candy_position[1]] != 4) {
+				candy_position[0]--;
+			}
+			else {
+				if (!isMonsterCell(candy_position[0] + 1, candy_position[1]) && candy_position[0] < 9 && board[candy_position[0] + 1][candy_position[1]] != 4) {
+					candy_position[0]++;
+				}
+			}
+		}
+	}
+}
+
+
+
 
 function moveMonsters() {
 	let num = $("#settings_form").find('input[name=monsters]').val();
@@ -265,7 +320,12 @@ function isMonsterCell(i, j) {
 	}
 	return false;
 }
-
+function isCandyCell(i, j) {
+	if (candy_position[0] == i && candy_position[1] == j) {
+		return true;
+	}
+	return false;
+}
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	for (var i = 0; i < 10; i++) {
@@ -275,6 +335,9 @@ function Draw() {
 			center.y = j * 60 + 30;
 			if (isMonsterCell(i, j)) {
 				context.drawImage(ghost_image, center.x - 25, center.y - 25);
+			}
+			else if (isCandyCell(i, j)) {
+				context.drawImage(candy_image, center.x - 25, center.y - 25);
 			} else if (board[i][j] == 2) {
 				context.drawImage(pac_image, center.x - 25, center.y - 25);
 			} else if (board[i][j] == 5) {
@@ -312,9 +375,6 @@ function Draw() {
 		}
 	}
 }
-
-
-
 
 function UpdateMonsterPosition(monster, x) {
 
@@ -364,9 +424,6 @@ function UpdateMonsterPosition(monster, x) {
 }
 
 
-
-
-
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
@@ -406,19 +463,24 @@ function UpdatePosition() {
 			startAgain();
 		}
 	}
-	else if (board[shape.i][shape.j] == 1) {
-		score++;
-		emptyCells.push(d);
+	else if (isCandyCell(shape.i, shape.j)) {
+		score = score + 50
+		candy_image.src="";
+		candy_position[0]=50;
+		candy_position[1]=50;
 	}
 	else if (board[shape.i][shape.j] == 5) {
+		foodEaten++;
 		score = score + 5;
 		emptyCells.push(d);
 	}
 	else if (board[shape.i][shape.j] == 15) {
+		foodEaten++;
 		score = score + 15;
 		emptyCells.push(d);
 	}
 	else if (board[shape.i][shape.j] == 25) {
+		foodEaten++;
 		score = score + 25;
 		emptyCells.push(d);
 	}
@@ -430,12 +492,12 @@ function UpdatePosition() {
 		} else {
 			score = score - 40;
 		}
+		foodEaten++;
 	}
 	else if (board[shape.i][shape.j] == 100) {
 		tookclock = 1;
 		emptyCells.push(d);
 	}
-
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
@@ -449,6 +511,7 @@ function gameOver() {
 	clearInterval(counter);
 	window.clearInterval(interval)
 	window.clearInterval(monsterInterval)
+	window.clearInterval(candyInterval)
 
 	alert("Loser!")
 }
@@ -741,4 +804,4 @@ var keyboardMap = [
 	"PA1", // [253]
 	"WIN_OEM_CLEAR", // [254]
 	"" // [255]
-  ];
+];
