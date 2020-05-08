@@ -82,8 +82,16 @@ $(document).ready(function () {
         points15 = $("#settings_form").find('input[name=15points]').val();
         points25 = $("#settings_form").find('input[name=25points]').val();
         //send parameters to gameva
-        scrollto("main-page");
-        Start();
+        let timeInserted = $("#settings_form").find('input[name=time]').val()
+        let balls = $("#settings_form").find('input[name=food]').val()
+        let numOfMonsters = $("#settings_form").find('input[name=monsters]').val()
+        if (timeInserted > 59 && balls > 49 && balls < 91 && numOfMonsters > 0 && numOfMonsters < 5) {
+            scrollto("main-page");
+            Start();
+        }
+        else{
+            alert("One or more parameters is illegual")
+        }
     })
 
     $("#up_settings").keydown(function (e) {
