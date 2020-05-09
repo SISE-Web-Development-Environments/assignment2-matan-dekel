@@ -1,21 +1,161 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="./jquery-3.4.1.slim.min.js"></script>
-		<script type="text/javascript" src="./app.js"></script>
-	</head>
 
-	<body>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
+<head>
+	<script src="./js/jquery-3.4.1.slim.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="js/jquey.validate.js"  type="text/javascript"></script>
+	<script type="text/javascript" src="./js/app.js"></script>
+	<script type=text/javascript src="./js/logics.js"></script>
+	<script type="text/javascript" src=./js/modal.js></script>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+<body>
+	<header id = "header" class="header">
+		
+		<img src="img/logo.png" alt="logo"  height="90px" width="90px" style="float: right;">
+		<div style="float:none">
+			<span id="app_name">Matan and Dekel's pacman</span><br>
+			<span id="details">Matan Anavi - 204502215 & Dekel levy - 204318851</span>
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
+	</header>
+
+	<section id="main_block" class="main_block">
+		<nav>
+			<ul>
+				<li><a	href="#" onclick="scrollto('welcome');"> Welcome</a></li>
+				<li><a href="#" onclick="scrollto('register');">Register</a></li>
+				<li> <a href="#" onclick="scrollto('login');">Login</a></li>
+				<li><a href = "#" onclick = "showModal()">About</a></li>
+			</ul>
+		</nav>
+		<div id="welcome">
+			<button onclick="scrollto('login')" id="login-btn" class="btn">Login</button>
+			<button onclick="scrollto('register')" id="register-btn" class="btn">Register</button>
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div id="login" style="display: none;">
+			Login page:
+			<form id="login_form">
+				<label for="aname">Account name:</label><br>
+				<input type="text" id="aname" name="name"><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="apassword" name="password"><br>
+			</form>
+			<button onclick="tryLogin()" class="btn">login</button>
 		</div>
-	</body>
+		<div id="register" style="display: none;">
+			Register Page:
+			<form id="register_form">
+				<fieldset>
+					<label for="aname">Account name:</label><br>
+					<input type="text" id="raname" name="account_name" value=""><br>
+					<label for="password">Password:</label><br>
+					<input type="password" id="rapassword" name="password" value=""><br>
+					<label for="rfname">Full name:</label><br>
+					<input type="text" id="rfname" name="full_name" ><br>
+					<label for="rmail">Email:</label><br>
+					<input type="email" id="rmail" name="email" ><br>
+					<label for="rdate">Birth date:</label><br>
+					<input type="date" id="rdate" name="date" ><br>
+
+					<input id ="register_button"class="submit" type="submit" value="submit"/>
+				</fieldset>
+			</form>
+			
+		</div>
+		<div id="settings" style="display: none;">
+			<form id="settings_form">
+				<fieldset>
+					<label for="time_settings">Timer: </label><br>
+					<input type="number" id="time_settings" name="time" value=""><br>
+					<label for="food_settings">number of balls(50-90):</label><br>
+					<input type="number" id="food_settings" name="food" value=""><br>
+					<label for="monster_settings">number of monsters(1-4):</label><br>
+					<input type="number" id="monster_settings" name="monsters" value=""><br>
+					<label for="5_points_settings">color of 5 point</label><br>
+					<input type="color" id="5_points_settings" name="5points"><br>
+					<label for="15_points_settings">color of 15 point</label><br>
+					<input type="color" id="15_points_settings" name="15points"><br>
+					<label for="25_points_settings">color of 25 point</label><br>
+					<input type="color" id="25_points_settings" name="25points"><br>
+					<label for="up_settings">Choose up button</label><br>
+					<input name="up" id="up_settings" value=""></input><br>
+					<label for="down_settings">Choose down button</label><br>
+					<input name="down" id="down_settings"></input><br>
+					<label for="right_settings">Choose right button</label><br>
+					<input name="right" id="right_settings"></input><br>
+					<label for="left_settings">Choose left button</label><br>
+					<input name="left" id="left_settings"></input><br><br>
+					<input id ="settings_button"class="submit" type="submit" value="submit"/>
+					
+				</fieldset>
+			</form>
+			<button id ="#random_settings_button" onclick="randomizeSettings()">Random</button><br>
+		</div>
+		<div id="main-page" style="display: none;">
+			<div id="username">
+				<div>The username of the player is: <span id="lblUsername"></span> </div>
+			</div>
+			<div id="score">
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div id="time">
+				<div>Game is over in: <span id="lblTime"></span> seconds!</div>
+			</div>
+			<div class="lblLife">
+				<span>LIVES:</span>
+				<img src="img/pacman-right.png" alt="life0" id = "life0" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life1" id = "life1" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life2" id = "life2" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life3" id = "life3" height= "30px" width= "30px" style= "vertical-align: middle;">
+				<img src="img/pacman-right.png" alt="life4" id = "life4" height= "30px" width= "30px" style= "vertical-align: middle;">
+
+			</div>
+			<button onclick="Start()" class="btn">Restart</button>
+			
+			<div id="game">
+				<table>
+					<canvas id="canvas" height="600" width="600" style=" float: left;"></canvas>
+					<div style="float: right;">
+						Settings:
+						<ul>
+							<li>time settings: <textarea readonly id="time_settings_read"></textarea></li><br>
+							<li>number of food balls: <textarea readonly id="food_settings_read"></textarea></li><br>
+							<li>number of monsters: <textarea readonly id="monster_settings_read"></textarea></li><br>
+							<li>color of 5 point: <div id="5_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div></li><br>
+							<li>color of 15 point:<div id="15_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div> </li><br>
+							<li>color of 25 point: <div id="25_points_settings_read" style="float:right; width:20px; height:20px; margin:5px; border:1px;background-color:black"></div></li><br>
+							<li>up button:<textarea readonly id="up_settings_read"></textarea> </li><br>
+							<li>down button: <textarea readonly id="down_settings_read"></textarea></li><br>
+							<li>right button: <textarea readonly id="right_settings_read"></textarea></li><br>
+							<li>left button:<textarea readonly id="left_settings_read"></textarea> </li><br>
+						</ul>
+					</div>
+				</table>
+				
+			</div>
+		
+		</div>
+	</section>
+
+	<footer id = "footer" class="footer">
+		<span id="app_name">Matan and Dekel's pacman</span><br>
+		<span id = site_detalis>this is a pacman game made in HTML5 and JS for school project</span><br>
+		<span id="communication_details">Matan Anavi - MrBahur25@gmail.com & Dekel levy - Dekelle@post.bgu.ac.il</span>
+	</footer>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+	<span class="close" onclick="closeModal()">&times;</span>
+	  <p>Created by Matan Anavi and Dekel Levy.<br> We used the template given us by WDE staff. <br>We used jquery to set and get information from the html forms.<br>
+	We also used validation pluggin to check if the password inserted is strong enough.<br>The main difficulties was to create the timer, and add the monster and all the functionallity the monster has. </p>
+	</div>
+  
+  </div>
+</body>
+
 </html>
