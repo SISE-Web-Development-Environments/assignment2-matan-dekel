@@ -59,7 +59,6 @@ function Start() {
 		document.getElementById("life" + i).style.display = ("inline");
 	}
 	setSettings()
-	foodEaten = 0;
 	num_of_candies = 1;
 	toEat = $("#settings_form").find('input[name=food]').val();
 	toEat++;
@@ -75,7 +74,9 @@ function Start() {
 	var count = $("#settings_form").find('input[name=time]').val();
 	var specialPoints = 1;
 	var clocks = 1;
-
+	if (count == $("#settings_form").find('input[name=time]').val()) {
+		foodEaten = 0;
+	}
 	tookclock = 0;
 	counter = setInterval(timer, 1000); //1000 will  run it every 1 second
 	function timer() {
@@ -85,7 +86,7 @@ function Start() {
 			display.textContent = count;
 		}
 		if (foodEaten == toEat) {
-			count = 0;
+			count =1	;
 			display.textContent = count;
 		}
 		count = count - 1;
@@ -124,8 +125,8 @@ function Start() {
 	var cnt = 100;
 	emptyCells = new Array()
 	let food_remain = $("#settings_form").find('input[name=food]').val();
-	let fifteenPoints = Math.round(food_remain * 0.3);
-	let twentyFivePoints = Math.round(food_remain * 0.1);
+	let fifteenPoints = Math.floor(food_remain * 0.3);
+	let twentyFivePoints = Math.floor(food_remain * 0.1);
 	let fivePoints = food_remain - (fifteenPoints + twentyFivePoints);
 
 	start_time = new Date();
@@ -218,7 +219,6 @@ function Start() {
 
 function moveCandy() {
 	x = Math.random()
-	board[candy_position[0]][candy_position[1]] = 0;
 	if (x < 0.25 && !isMonsterCell(candy_position[0], candy_position[1] - 1) && candy_position[1] > 0 && board[candy_position[0]][candy_position[1] - 1] != 4) {
 		candy_position[1]--;
 	}
@@ -238,8 +238,6 @@ function moveCandy() {
 		}
 	}
 }
-
-
 
 
 function moveMonsters() {
@@ -463,12 +461,7 @@ function UpdatePosition() {
 			startAgain();
 		}
 	}
-	else if (isCandyCell(shape.i, shape.j)) {
-		score = score + 50
-		candy_image.src="";
-		candy_position[0]=50;
-		candy_position[1]=50;
-	}
+	
 	else if (board[shape.i][shape.j] == 5) {
 		foodEaten++;
 		score = score + 5;
@@ -497,6 +490,12 @@ function UpdatePosition() {
 	else if (board[shape.i][shape.j] == 100) {
 		tookclock = 1;
 		emptyCells.push(d);
+	}
+	if (isCandyCell(shape.i, shape.j)) {
+		score = score + 50
+		candy_image.src = "";
+		candy_position[0] = 50;
+		candy_position[1] = 50;
 	}
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
